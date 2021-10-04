@@ -10,6 +10,8 @@ A Python API built around scraping [jisho.org](https://jisho.org), an online Jap
 pip install jisho_api
 ```
 
+[![asciicast](https://asciinema.org/a/NJuZQnNfe0JDdDELn08NhmYuY.svg)](https://asciinema.org/a/NJuZQnNfe0JDdDELn08NhmYuY)
+
 ## Requests
 
 You can request three types of information:
