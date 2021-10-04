@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "jisho-api"
+version = "0.1.0"
+description = "A jisho.org API and scraper in Python."
+license = "Apache-2.0"
+readme = "README.md"
+authors = ["pedroallenrevez@gmail.com"]
+homepage = "https://github.com/pedroallenrevez/jisho-api"
+repository = "https://github.com/pedroallenrevez/jisho-api"
+keywords = ["jisho", "japanese", "api", "scraper", "kanji", "python"]
+
+[tool.poetry.dependencies]
+python = "^3.6.1"
+click = "^8.0.1"
+pydantic = "^1.8.2"
+requests = "^2.26.0"
+rich = "^10.11.0"
+bs4 = "^0.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
