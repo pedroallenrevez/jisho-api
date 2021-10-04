@@ -1,6 +1,15 @@
 # jisho-api
 
-A Python API built around scraping https://jisho.org, an online Japanese dictionary.
+![Release](https://github.com/pedroallenrevez/jisho-api/actions/workflows/release/badge.svg)
+[![GitHub tag](https://img.shields.io/github/tag/MichaelCurrin/badge-generator)](https://github.com/MichaelCurrin/badge-generator/releases/?include_prereleases&sort=semver "View GitHub releases")
+
+
+
+A Python API built around scraping [jisho.org](https://jisho.org), an online Japanese dictionary.
+
+```bash
+pip install jisho_api
+```
 
 ## Requests
 
@@ -64,3 +73,17 @@ jisho config
 
 This will create a `~/.jisho/` folder with a `config.json` with your settings.
 All your searches will be cached, and accessed if you search for the exact same term again.
+
+## Notes and considerations
+According to this [thread](https://jisho.org/forum/54fefc1f6e73340b1f160000-is-there-any-kind-of-search-api),
+there is no official API, although there is a kind of [API request](https://jisho.org/api/v1/search/words?keyword=house) made by jisho.org, which is used to scrape words. This does not work for Kanji tho,
+because it would search the Kanji as a word, and not have any relevant metadata for the character itself.
+
+Permissions to scrape also granted in the aforementioned thread.
+
+As stated in their [about page](https://jisho.org/docs) as well, jisho.org uses a collection of well-known [electronic dictionares](http://www.edrdg.org/):
+> This site uses the JMdict, Kanjidic2, JMnedict and Radkfile dictionary files. -jisho.org
+
+## Credits and Acknowledgements for data
+
+All credit is given where it's due, and the several extracted resources is given at jisho.org's [about page](https://jisho.org/docs).
