@@ -1,20 +1,24 @@
-from pydantic import BaseModel, ValidationError
-from pathlib import Path
 import json
-import re
 import pprint
+import re
 import urllib
-import requests
+from pathlib import Path
 from typing import List
+
+import requests
 from bs4 import BeautifulSoup
+from pydantic import BaseModel, ValidationError
+from rich.markdown import Markdown
 
 from jisho_api import console
 from jisho_api.util import CLITagger
-from rich.markdown import Markdown
+
 from .cfg import SentenceConfig
+
 
 class RequestMeta(BaseModel):
     status: int
+
 
 class SentenceRequest(BaseModel):
     meta: RequestMeta
@@ -29,57 +33,54 @@ class SentenceRequest(BaseModel):
             console.print(CLITagger.bullet(d.japanese))
             console.print(f"[white][[blue]en[white]]")
             console.print(CLITagger.bullet(d.en_translation))
-            console.print(Markdown('---'))
+            console.print(Markdown("---"))
 
 
 class Sentence:
-    URL = 'https://jisho.org/search/'
-    ROOT = Path.home() / '.jisho/data/sentence/'
+    URL = "https://jisho.org/search/"
+    ROOT = Path.home() / ".jisho/data/sentence/"
 
     @staticmethod
     def sentences(soup):
-        res = soup.find_all('div', {"class": "sentence_content"})
+        res = soup.find_all("div", {"class": "sentence_content"})
 
         sts = []
         for r in res:
-            s1_jp = r.find_all('li')
-            s1_en = r.find_all('span', {"class": "english"})[0].text
+            s1_jp = r.find_all("li")
+            s1_en = r.find_all("span", {"class": "english"})[0].text
 
             b = ""
-            for s in s1_jp:  
-                u = s.find('span', {"class": "unlinked"}).text
+            for s in s1_jp:
+                u = s.find("span", {"class": "unlinked"}).text
                 b += u
                 try:
-                    f = s.find('span', {"class": "furigana"}).text
+                    f = s.find("span", {"class": "furigana"}).text
                     b += f"({f})"
                 except:
                     pass
-            sts.append({
-                "japanese": b,
-                "en_translation": s1_en
-            })
+            sts.append({"japanese": b, "en_translation": s1_en})
 
         return sts
 
     @staticmethod
     def request(word, cache=False):
-        url = Sentence.URL + urllib.parse.quote(word+" #sentences")
+        url = Sentence.URL + urllib.parse.quote(word + " #sentences")
         toggle = False
 
-        if cache and (Sentence.ROOT / (word+'.json')).exists():
+        if cache and (Sentence.ROOT / (word + ".json")).exists():
             toggle = True
-            with open(Sentence.ROOT / (word+'.json'), 'r') as fp:
+            with open(Sentence.ROOT / (word + ".json"), "r") as fp:
                 r = json.load(fp)
         else:
             r = requests.get(url).content
-        soup = BeautifulSoup(r, 'html.parser')
+        soup = BeautifulSoup(r, "html.parser")
 
         r = SentenceRequest(
             **{
                 "meta": {
                     "status": 200,
                 },
-                "data": Sentence.sentences(soup)
+                "data": Sentence.sentences(soup),
             }
         )
         if not len(r):
@@ -92,5 +93,5 @@ class Sentence:
     @staticmethod
     def save(word, r):
         Sentence.ROOT.mkdir(exist_ok=True)
-        with open(Sentence.ROOT / f"{word}.json", 'w') as fp:
+        with open(Sentence.ROOT / f"{word}.json", "w") as fp:
             json.dump(r.dict(), fp, indent=4, ensure_ascii=False)

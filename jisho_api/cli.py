@@ -1,17 +1,15 @@
 import json
-import click
 import pprint
-from jisho_api.word.request import Word
-from jisho_api.kanji.request import Kanji
-from jisho_api.sentence.request import Sentence
-from jisho_api import console
-
 from pathlib import Path
 
-
+import click
+from rich.progress import Progress, track
 from rich.prompt import Prompt
-from rich.progress import track, Progress
 
+from jisho_api import console
+from jisho_api.kanji.request import Kanji
+from jisho_api.sentence.request import Sentence
+from jisho_api.word.request import Word
 
 
 @click.group()
@@ -19,40 +17,44 @@ def main():
     """A jisho.org API. Test the API, or search the Japanese dictionary."""
     pass
 
+
 @click.group()
 def search():
     """Search jisho.org for words, kanjis, or sentences."""
     pass
+
 
 @click.group()
 def scrape():
     """Scrape requests, given a list of search terms."""
     pass
 
+
 @click.command(name="config")
 def config():
     """Set ~/.jisho/config.json with cache settings."""
     val = click.confirm("Cache enabled?")
-    p = Path.home() / '.jisho'
+    p = Path.home() / ".jisho"
     p.mkdir(exist_ok=True)
-    with open(p / 'config.json', 'w') as fp:
+    with open(p / "config.json", "w") as fp:
         json.dump({"cache": val}, fp, indent=4)
     console.print("Config written to '.jisho/config.json'")
 
+
 def _get_home_config():
-    p = Path.home() / '.jisho/config.json'
+    p = Path.home() / ".jisho/config.json"
     if p.exists():
-        with open(p, 'r') as fp:
+        with open(p, "r") as fp:
             return json.load(fp)
     else:
         return None
 
+
 def _cache_enabled():
     cfg = _get_home_config()
     if cfg:
-        return cfg['cache']
+        return cfg["cache"]
     return False
-
 
 
 def scraper(cls, words, root_dump, cache=True):
@@ -62,12 +64,12 @@ def scraper(cls, words, root_dump, cache=True):
         for i, w in enumerate(words):
             # 0 - name should be between quotes to search specifically for it
             # with a * it is a wildcard, to see applications of this word at the end
-            strict = '*' not in w
+            strict = "*" not in w
             if strict:
                 w = f'"{w}"'
-            
+
             # 1 - if file exists do not request
-            word_path =root_dump / f'{w}.json'
+            word_path = root_dump / f"{w}.json"
             if word_path.exists():
                 progress.advance(task1)
                 continue
@@ -76,16 +78,17 @@ def scraper(cls, words, root_dump, cache=True):
             wr = cls.request(w, cache=cache)
             if wr is None:
                 progress.advance(task1)
-                continue 
+                continue
             words[w] = wr
 
             progress.advance(task1)
     return words
 
+
 def _load_words(file_path):
-    with open(file_path, 'r') as fp:
+    with open(file_path, "r") as fp:
         txt = fp.read()
-    words = txt.split('\n')
+    words = txt.split("\n")
     return words
 
 
@@ -97,6 +100,7 @@ def scrape_words(file_path: str):
 
     scraper(Word, _load_words(file_path), root_dump)
 
+
 @click.command(name="kanji")
 @click.argument("file_path")
 def scrape_kanji(file_path: str):
@@ -104,6 +108,7 @@ def scrape_kanji(file_path: str):
     root_dump.mkdir(parents=True, exist_ok=True)
 
     scraper(Kanji, _load_words(file_path), root_dump)
+
 
 @click.command(name="sentence")
 @click.argument("file_path")
@@ -113,35 +118,39 @@ def scrape_sentence(file_path: str):
 
     scraper(Sentence, _load_words(file_path), root_dump)
 
+
 @click.command(name="word")
 @click.argument("word")
-@click.option('--cache', type=bool, is_flag=True)
-@click.option('--no-cache', type=bool, is_flag=True)
+@click.option("--cache", type=bool, is_flag=True)
+@click.option("--no-cache", type=bool, is_flag=True)
 def request_word(word: str, cache: bool, no_cache: bool):
     flag = (cache or _cache_enabled()) and not no_cache
     w = Word.request(word, cache=flag)
     if w:
         w.rich_print()
 
+
 @click.command(name="kanji")
 @click.argument("kanji")
-@click.option('--cache', type=bool, is_flag=True)
-@click.option('--no-cache', type=bool, is_flag=True)
+@click.option("--cache", type=bool, is_flag=True)
+@click.option("--no-cache", type=bool, is_flag=True)
 def request_kanji(kanji: str, cache: bool, no_cache: bool):
     flag = (cache or _cache_enabled()) and not no_cache
     k = Kanji.request(kanji, cache=flag)
     if k:
         k.rich_print()
 
+
 @click.command(name="sentence")
 @click.argument("sentence")
-@click.option('--cache', type=bool, is_flag=True)
-@click.option('--no-cache', type=bool, is_flag=True)
+@click.option("--cache", type=bool, is_flag=True)
+@click.option("--no-cache", type=bool, is_flag=True)
 def request_sentence(sentence: str, cache: bool, no_cache: bool):
     flag = (cache or _cache_enabled()) and not no_cache
     k = Sentence.request(sentence, cache=flag)
     if k:
         k.rich_print()
+
 
 # =============
 # ==== CLI ====

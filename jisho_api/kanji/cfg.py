@@ -1,21 +1,25 @@
-from pydantic import BaseModel, HttpUrl
-from typing import List, Optional, Dict
 from enum import Enum
-from jisho_api import console
-from jisho_api.util import CLITagger
+from typing import Dict, List, Optional
+
+from pydantic import BaseModel, HttpUrl
 from rich.markdown import Markdown
 
+from jisho_api import console
+from jisho_api.util import CLITagger
+
+
 class JLPT(str, Enum):
-    N5 = 'N5'
-    N4 = 'N4'
-    N3 = 'N3'
-    N2 = 'N2'
-    N1 = 'N1'
+    N5 = "N5"
+    N4 = "N4"
+    N3 = "N3"
+    N2 = "N2"
+    N1 = "N1"
 
 
 class MainReadings(BaseModel):
     kun: Optional[List[str]]
     on: Optional[List[str]]
+
 
 class KanjiRadical(BaseModel):
     alt_forms: Optional[List[str]]
@@ -36,7 +40,7 @@ class KanjiMeta(BaseModel):
         japanese: Optional[List[str]]
         chinese: Optional[List[str]]
         korean: Optional[List[str]]
-        
+
     education: Optional[KanjiMetaEducation]
     dictionary_idxs: Dict[str, str]
     classifications: Dict[str, str]
@@ -49,6 +53,7 @@ class ReadingExamples(BaseModel):
         kanji: str
         reading: str
         meanings: List[str]
+
     kun: Optional[List[Example]]
     on: Optional[List[Example]]
 

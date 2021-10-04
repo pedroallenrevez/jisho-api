@@ -1,6 +1,7 @@
-from pydantic import BaseModel, HttpUrl
-from typing import List, Optional
 from enum import Enum
+from typing import List, Optional
+
+from pydantic import BaseModel, HttpUrl
 
 
 class Sense(BaseModel):
@@ -10,6 +11,7 @@ class Sense(BaseModel):
 
     class Source(BaseModel):
         language: str
+
     english_definitions: List[str]
     parts_of_speech: List[Optional[str]]
     links: List[Link]

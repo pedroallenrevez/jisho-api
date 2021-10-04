@@ -1,22 +1,21 @@
-import requests 
 import json
 import pprint
 import urllib
-from pydantic import ValidationError, validator
 from pathlib import Path
-
-from pydantic import BaseModel
 from typing import List
 
-from .cfg import WordConfig
-from jisho_api import console
-
+import requests
+from pydantic import BaseModel, ValidationError, validator
 from rich.markdown import Markdown
 
+from jisho_api import console
+
+from .cfg import WordConfig
 
 
 class RequestMeta(BaseModel):
     status: int
+
 
 class WordRequest(BaseModel):
     meta: RequestMeta
@@ -48,7 +47,7 @@ class WordRequest(BaseModel):
                     else:
                         base += f", [purple]{j.reading}"
 
-            if len(wdef.jlpt) :
+            if len(wdef.jlpt):
                 base += f" [blue][JLPT: {', '.join(wdef.jlpt)}]"
             console.print(base)
 
@@ -56,20 +55,21 @@ class WordRequest(BaseModel):
                 base = f"[yellow]{i+1}. [white]{', '.join(s.english_definitions)}"
                 base += "".join([f", ([magenta]{t}[white])" for t in s.tags])
                 console.print(base)
-            console.print(Markdown('---'))
+            console.print(Markdown("---"))
+
 
 class Word:
-    URL = 'https://jisho.org/api/v1/search/words?keyword='
-    ROOT = Path.home() / '.jisho/data/word'
+    URL = "https://jisho.org/api/v1/search/words?keyword="
+    ROOT = Path.home() / ".jisho/data/word"
 
     @staticmethod
     def request(word, cache=False):
         url = Word.URL + urllib.parse.quote(word)
         toggle = False
 
-        if cache and (Word.ROOT / (word+'.json')).exists():
+        if cache and (Word.ROOT / (word + ".json")).exists():
             toggle = True
-            with open(Word.ROOT / (word+'.json'), 'r') as fp:
+            with open(Word.ROOT / (word + ".json"), "r") as fp:
                 r = json.load(fp)
         else:
             r = requests.get(url).json()
@@ -85,5 +85,5 @@ class Word:
     @staticmethod
     def save(word, r):
         Word.ROOT.mkdir(exist_ok=True)
-        with open(Word.ROOT / f"{word}.json", 'w') as fp:
+        with open(Word.ROOT / f"{word}.json", "w") as fp:
             fp.write(json.dumps(r.dict(), indent=4, ensure_ascii=False))
