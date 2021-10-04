@@ -1,14 +1,14 @@
 import json
 import click
 import pprint
-from jisho.word.request import Word
-from jisho.kanji.request import Kanji
-from jisho.sentence.request import Sentence
+from jisho_api.word.request import Word
+from jisho_api.kanji.request import Kanji
+from jisho_api.sentence.request import Sentence
+from jisho_api import console
 
 from pathlib import Path
 
 
-from jisho import console
 from rich.prompt import Prompt
 from rich.progress import track, Progress
 
@@ -16,18 +16,22 @@ from rich.progress import track, Progress
 
 @click.group()
 def main():
+    """A jisho.org API. Test the API, or search the Japanese dictionary."""
     pass
 
 @click.group()
 def search():
+    """Search jisho.org for words, kanjis, or sentences."""
     pass
 
 @click.group()
 def scrape():
+    """Scrape requests, given a list of search terms."""
     pass
 
 @click.command(name="config")
 def config():
+    """Set ~/.jisho/config.json with cache settings."""
     val = click.confirm("Cache enabled?")
     p = Path.home() / '.jisho'
     p.mkdir(exist_ok=True)

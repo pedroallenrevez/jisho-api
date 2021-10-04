@@ -8,8 +8,8 @@ import requests
 from typing import List
 from bs4 import BeautifulSoup
 
-from jisho import console
-from jisho.util import CLITagger
+from jisho_api import console
+from jisho_api.util import CLITagger
 from rich.markdown import Markdown
 from .cfg import SentenceConfig
 

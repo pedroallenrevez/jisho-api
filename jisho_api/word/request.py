@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from typing import List
 
 from .cfg import WordConfig
-from jisho import console
+from jisho_api import console
 
 from rich.markdown import Markdown
 
