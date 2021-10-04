@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "jisho-api"
+name = "jisho_api"
 version = "0.1.0"
 description = "A jisho.org API and scraper in Python."
 license = "Apache-2.0"
 readme = "README.md"
-authors = ["pedroallenrevez@gmail.com"]
+authors = ["pedro <pedroallenrevez@gmail.com>"]
 homepage = "https://github.com/pedroallenrevez/jisho-api"
 repository = "https://github.com/pedroallenrevez/jisho-api"
 keywords = ["jisho", "japanese", "api", "scraper", "kanji", "python"]
