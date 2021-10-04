@@ -1,7 +1,6 @@
 # jisho-api
 
-![Release](https://github.com/pedroallenrevez/jisho-api/actions/workflows/release/badge.svg)
-[![GitHub tag](https://img.shields.io/github/tag/MichaelCurrin/badge-generator)](https://github.com/MichaelCurrin/badge-generator/releases/?include_prereleases&sort=semver "View GitHub releases")
+[![GitHub tag](https://img.shields.io/github/tag/pedroallenrevez/jisho-api)](https://github.com/pedroallenrevez/jisho-api/releases/?include_prereleases&sort=semver "View GitHub releases")
 
 
 
