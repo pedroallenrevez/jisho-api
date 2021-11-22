@@ -22,7 +22,7 @@ class WordRequest(BaseModel):
     data: List[WordConfig]
 
     def __iter__(self):
-        yield from self.data
+        yield from reversed(self.data)
 
     def __len__(self):
         return len(self.data)

@@ -82,7 +82,7 @@ because it would search the Kanji as a word, and not have any relevant metadata 
 
 Permissions to scrape also granted in the aforementioned thread.
 
-As stated in their [about page](https://jisho.org/docs) as well, jisho.org uses a collection of well-known [electronic dictionares](http://www.edrdg.org/):
+As stated in their [about page](https://jisho.org/docs) as well, jisho.org uses a collection of well-known [electronic dictionaries](http://www.edrdg.org/):
 > This site uses the JMdict, Kanjidic2, JMnedict and Radkfile dictionary files. -jisho.org
 
 ## Credits and Acknowledgements for data

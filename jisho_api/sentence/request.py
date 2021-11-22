@@ -27,8 +27,11 @@ class SentenceRequest(BaseModel):
     def __len__(self):
         return len(self.data)
 
+    def __iter__(self):
+        yield from reversed(self.data)
+
     def rich_print(self):
-        for d in self.data:
+        for d in self:
             console.print(f"[white][[red]jp[white]]")
             console.print(CLITagger.bullet(d.japanese))
             console.print(f"[white][[blue]en[white]]")
@@ -71,21 +74,22 @@ class Sentence:
             toggle = True
             with open(Sentence.ROOT / (word + ".json"), "r") as fp:
                 r = json.load(fp)
+            r = SentenceRequest(**r)
         else:
             r = requests.get(url).content
-        soup = BeautifulSoup(r, "html.parser")
+            soup = BeautifulSoup(r, "html.parser")
 
-        r = SentenceRequest(
-            **{
-                "meta": {
-                    "status": 200,
-                },
-                "data": Sentence.sentences(soup),
-            }
-        )
-        if not len(r):
-            console.print(f"[red bold][Error] [white] No matches found for {word}.")
-            return None
+            r = SentenceRequest(
+                **{
+                    "meta": {
+                        "status": 200,
+                    },
+                    "data": Sentence.sentences(soup),
+                }
+            )
+            if not len(r):
+                console.print(f"[red bold][Error] [white] No matches found for {word}.")
+                return None
         if cache and not toggle:
             Sentence.save(word, r)
         return r

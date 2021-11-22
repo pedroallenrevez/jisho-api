@@ -326,32 +326,33 @@ class Kanji:
             toggle = True
             with open(Kanji.ROOT / (kanji + ".json"), "r") as fp:
                 r = json.load(fp)
+            r = KanjiRequest(**r)
         else:
             r = requests.get(url).content
 
-        soup = BeautifulSoup(r, "html.parser")
+            soup = BeautifulSoup(r, "html.parser")
 
-        try:
-            r = {
-                "meta": {
-                    "status": 200,
-                },
-                "data": {
-                    "kanji": kanji,
-                    "strokes": Kanji.strokes(soup),
-                    "main_meanings": Kanji.main_meanings(soup),
-                    "main_readings": Kanji.main_readings(soup),
-                    "meta": Kanji.meta(soup),
-                    "radical": Kanji.radical(soup),
-                    "reading_examples": Kanji.reading_examples(soup),
-                },
-            }
-            r = KanjiRequest(**r)
-        except Exception as e:
-            console.print(
-                f"[red bold ][Error][/red bold] [white]No kanji found with name {kanji}."
-            )
-            return None
+            try:
+                r = {
+                    "meta": {
+                        "status": 200,
+                    },
+                    "data": {
+                        "kanji": kanji,
+                        "strokes": Kanji.strokes(soup),
+                        "main_meanings": Kanji.main_meanings(soup),
+                        "main_readings": Kanji.main_readings(soup),
+                        "meta": Kanji.meta(soup),
+                        "radical": Kanji.radical(soup),
+                        "reading_examples": Kanji.reading_examples(soup),
+                    },
+                }
+                r = KanjiRequest(**r)
+            except Exception as e:
+                console.print(
+                    f"[red bold ][Error][/red bold] [white]No kanji found with name {kanji}."
+                )
+                return None
         if cache and not toggle:
             Kanji.save(kanji, r)
         return r
