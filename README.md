@@ -2,8 +2,6 @@
 
 [![GitHub tag](https://img.shields.io/github/tag/pedroallenrevez/jisho-api)](https://github.com/pedroallenrevez/jisho-api/releases/?include_prereleases&sort=semver "View GitHub releases")
 
-
-
 A Python API built around scraping [jisho.org](https://jisho.org), an online Japanese dictionary.
 
 ```bash
@@ -13,7 +11,6 @@ pip install jisho_api
 [![asciicast](https://asciinema.org/a/NJuZQnNfe0JDdDELn08NhmYuY.svg)](https://asciinema.org/a/NJuZQnNfe0JDdDELn08NhmYuY)
 
 ## Requests
-
 You can request three types of information:
 - Words
 - Kanji
@@ -36,7 +33,7 @@ You can check the structure of a word request in `jisho/word/cfg.py`, and likewi
 
 You could also do so programatically, by doing:
 ```python
-from jisho.word import Word
+from jisho_api.word import Word
 r = Word.request('water')
 ```
 
@@ -44,7 +41,6 @@ r = Word.request('water')
 > **Note**: Kanji requests can come with incomplete information, because it is not available in the page.
 
 ## Scrapers
-
 You can scrape the website for a list of given search terms.
 Supply them with a `.txt` file with the words separated by newlines.
 
@@ -57,8 +53,8 @@ All of the resulting searches will be stored in `~/.jisho/data`.
 
 In case you want to scrape programatically you can:
 ```python
-from jisho.cli import scrape
-from jisho.word import Word
+from jisho_api.cli import scrape
+from jisho_api.word import Word
 
 word_requests = scrape(Word, ['water', 'fire'], '/to/path')
 ```
@@ -66,7 +62,6 @@ This will return a dictionary, which key values are the search term and request 
 Failing requests are not included.
 
 ## Cache and config
-
 If you want cache enabled just run 
 ```bash
 jisho config
@@ -86,5 +81,4 @@ As stated in their [about page](https://jisho.org/docs) as well, jisho.org uses 
 > This site uses the JMdict, Kanjidic2, JMnedict and Radkfile dictionary files. -jisho.org
 
 ## Credits and Acknowledgements for data
-
 All credit is given where it's due, and the several extracted resources is given at jisho.org's [about page](https://jisho.org/docs).
