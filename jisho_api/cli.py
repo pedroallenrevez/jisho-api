@@ -10,6 +10,7 @@ from jisho_api import console
 from jisho_api.kanji.request import Kanji
 from jisho_api.sentence.request import Sentence
 from jisho_api.word.request import Word
+from jisho_api.tokenize.request import Tokens
 
 
 @click.group()
@@ -95,6 +96,7 @@ def _load_words(file_path):
 @click.command(name="word")
 @click.argument("file_path")
 def scrape_words(file_path: str):
+    """Scrape list of words in txtfile, separated by newline."""
     root_dump = Word.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 
@@ -104,6 +106,7 @@ def scrape_words(file_path: str):
 @click.command(name="kanji")
 @click.argument("file_path")
 def scrape_kanji(file_path: str):
+    """Scrape list of kanji in txtfile, separated by newline."""
     root_dump = Kanji.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 
@@ -113,10 +116,20 @@ def scrape_kanji(file_path: str):
 @click.command(name="sentence")
 @click.argument("file_path")
 def scrape_sentence(file_path: str):
+    """Scrape list of sentence in txtfile, separated by newline."""
     root_dump = Sentence.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 
     scraper(Sentence, _load_words(file_path), root_dump)
+
+@click.command(name="tokens")
+@click.argument("file_path")
+def scrape_tokens(file_path: str):
+    """Scrape list of tokens in txtfile, separated by newline."""
+    root_dump = Tokens.ROOT
+    root_dump.mkdir(parents=True, exist_ok=True)
+
+    scraper(Tokens, _load_words(file_path), root_dump)
 
 
 @click.command(name="word")
@@ -124,6 +137,8 @@ def scrape_sentence(file_path: str):
 @click.option("--cache", type=bool, is_flag=True)
 @click.option("--no-cache", type=bool, is_flag=True)
 def request_word(word: str, cache: bool, no_cache: bool):
+    """Uses jisho.org word search API.
+    """
     flag = (cache or _cache_enabled()) and not no_cache
     w = Word.request(word, cache=flag)
     if w:
@@ -135,6 +150,8 @@ def request_word(word: str, cache: bool, no_cache: bool):
 @click.option("--cache", type=bool, is_flag=True)
 @click.option("--no-cache", type=bool, is_flag=True)
 def request_kanji(kanji: str, cache: bool, no_cache: bool):
+    """Uses #kanji filter on jisho.org search engine.
+    """
     flag = (cache or _cache_enabled()) and not no_cache
     k = Kanji.request(kanji, cache=flag)
     if k:
@@ -146,8 +163,22 @@ def request_kanji(kanji: str, cache: bool, no_cache: bool):
 @click.option("--cache", type=bool, is_flag=True)
 @click.option("--no-cache", type=bool, is_flag=True)
 def request_sentence(sentence: str, cache: bool, no_cache: bool):
+    """Uses #sentences filter on jisho.org search engine.
+    """
     flag = (cache or _cache_enabled()) and not no_cache
     k = Sentence.request(sentence, cache=flag)
+    if k:
+        k.rich_print()
+
+@click.command(name="tokens")
+@click.argument("sentence")
+@click.option("--cache", type=bool, is_flag=True)
+@click.option("--no-cache", type=bool, is_flag=True)
+def request_tokens(sentence: str, cache: bool, no_cache: bool):
+    """jisho.org default search engine tokenizer.
+    """
+    flag = (cache or _cache_enabled()) and not no_cache
+    k = Tokens.request(sentence, cache=flag)
     if k:
         k.rich_print()
 
@@ -163,6 +194,7 @@ def make_cli():
     search.add_command(request_word)
     search.add_command(request_kanji)
     search.add_command(request_sentence)
+    search.add_command(request_tokens)
 
     main.add_command(scrape)
     main.add_command(search)

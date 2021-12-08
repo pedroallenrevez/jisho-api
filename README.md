@@ -15,6 +15,7 @@ You can request three types of information:
 - Words
 - Kanji
 - Sentences
+- Tokenize sentences
 
 The search terms are directly injected into jisho's search engine, which means all of 
 the filters used to curate a search should work as well. For instance, `"水"` would look 
@@ -35,6 +36,12 @@ You could also do so programatically, by doing:
 ```python
 from jisho_api.word import Word
 r = Word.request('water')
+from jishi_api.kanji import Kanji
+r = Kanji.request('水')
+from jishi_api.sentence import Sentence
+r = Sentence.request('水')
+from jishi_api.tokenize import Tokens
+r = Tokens.request('昨日すき焼きを食べました')
 ```
 
 > **Note**: Almost everything that is available in a page is being scraped.
@@ -48,6 +55,7 @@ Supply them with a `.txt` file with the words separated by newlines.
 jisho scrape word words.txt
 jisho scrape kanji kanji.txt
 jisho scrape sentence search_words.txt
+jisho scrape tokens sentences.txt
 ```
 All of the resulting searches will be stored in `~/.jisho/data`.
 
