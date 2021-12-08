@@ -36,11 +36,11 @@ You could also do so programatically, by doing:
 ```python
 from jisho_api.word import Word
 r = Word.request('water')
-from jishi_api.kanji import Kanji
+from jisho_api.kanji import Kanji
 r = Kanji.request('水')
-from jishi_api.sentence import Sentence
+from jisho_api.sentence import Sentence
 r = Sentence.request('水')
-from jishi_api.tokenize import Tokens
+from jisho_api.tokenize import Tokens
 r = Tokens.request('昨日すき焼きを食べました')
 ```
 
