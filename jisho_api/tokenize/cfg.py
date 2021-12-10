@@ -2,18 +2,25 @@ from pydantic import BaseModel
 from enum import Enum
 
 class PosTag(Enum):
+    adj="Adjective"
+    adv="Adverb"
+    conj="Conjunction"
+    det="Determiner"
+    interjection="Interjection"
     noun="Noun"
     particle="Particle"
-    verb="Verb"
-    det="Determiner"
-    conj="Conjunction"
+    pr_noun="Proper noun"
+    prfx="Prefix"
     pron="Pronoun"
-    unk='Unknown'
+    sfx="Suffix"
+    unk="Unknown"
+    verb="Verb"
 
-    # unexpected posTags get assigned the unknown enum.
+    # rather than causing the program to crash, inform the user of the unexpected posTag
     # implementation source: https://stackoverflow.com/questions/44867597/is-there-a-way-to-specify-a-default-value-for-python-enums
     @classmethod
     def _missing_(PosTag, value):
+        print("Unexpected positional Tag: {}".format(value))
         return PosTag.unk
 
 class TokenConfig(BaseModel):
