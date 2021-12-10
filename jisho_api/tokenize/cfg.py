@@ -6,8 +6,8 @@ class PosTag(Enum):
     particle="Particle"
     verb="Verb"
     det="Determiner"
-    cjc="Conjunction"
-    prn="Pronoun"
+    conj="Conjunction"
+    pron="Pronoun"
     unk='Unknown'
 
     # unexpected posTags get assigned the unknown enum.
