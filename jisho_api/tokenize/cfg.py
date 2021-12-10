@@ -6,6 +6,8 @@ class PosTag(Enum):
     particle="Particle"
     verb="Verb"
     det="Determiner"
+    cjc="Conjunction"
+    prn="Pronoun"
     unk='Unknown'
 
 class TokenConfig(BaseModel):
