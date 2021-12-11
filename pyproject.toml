@@ -13,7 +13,7 @@ keywords = ["jisho", "japanese", "api", "scraper", "kanji", "python"]
 jisho = "jisho_api.cli:make_cli"
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = "^3.7.1"
 click = "^8.0.1"
 pydantic = "^1.8.2"
 requests = "^2.26.0"
@@ -22,6 +22,7 @@ bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
+tatoebatools = "^0.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
