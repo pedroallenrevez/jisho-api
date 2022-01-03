@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jisho_api"
-version = "0.1.4"
+version = "0.1.5"
 description = "A jisho.org API and scraper in Python."
 license = "Apache-2.0"
 readme = "README.md"
@@ -25,6 +25,6 @@ pytest = "^6.1.2"
 tatoebatools = "^0.2.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.1.12"]
 build-backend = "poetry.core.masonry.api"
 

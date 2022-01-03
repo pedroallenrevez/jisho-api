@@ -1,5 +1,0 @@
-click
-pydantic
-requests
-rich
-bs4

@@ -10,6 +10,10 @@ class CLITagger:
     def bullet(text, color="white"):
         return f"[yellow]• [{color}]{text}"
 
+    @staticmethod
+    def underline(text, color="white"):
+        return f"[underline]{text}[/underline]"
+
 
 def flatten_recur(dct, rdct={}, separator=".", parent=""):
     for k, v in dct.items():

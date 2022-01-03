@@ -31,8 +31,13 @@ class TokenRequest(BaseModel):
         yield from self.data
 
     def rich_print(self):
+        base = ''
+        toks = ''
         for i, d in enumerate(self):
-            console.print(f"{i}. {d.token} [violet][{str(d.pos_tag.value)}]")
+            base += CLITagger.underline(d.token) + ' '
+            toks += f"{i}. {d.token} [violet][{str(d.pos_tag.value)}][/violet]\n"
+        console.print(base)
+        console.print(toks)
 
 
 class Tokens:
