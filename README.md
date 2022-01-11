@@ -61,7 +61,7 @@ All of the resulting searches will be stored in `~/.jisho/data`.
 
 In case you want to scrape programatically you can:
 ```python
-from jisho_api.cli import scrape
+from jisho_api import scrape
 from jisho_api.word import Word
 
 word_requests = scrape(Word, ['water', 'fire'], '/to/path')
