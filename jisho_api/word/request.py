@@ -8,9 +8,8 @@ import requests
 from pydantic import BaseModel, ValidationError, validator
 from rich.markdown import Markdown
 
-from jisho_api import console
-
-from .cfg import WordConfig
+from jisho_api.cli import console
+from jisho_api.word.cfg import WordConfig
 
 
 class RequestMeta(BaseModel):

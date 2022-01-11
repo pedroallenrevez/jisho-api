@@ -3,14 +3,11 @@ import pprint
 from pathlib import Path
 
 import click
+from rich.console import Console
+
+console = Console()
 from rich.progress import Progress, track
 from rich.prompt import Prompt
-
-from jisho_api import console
-from jisho_api.kanji.request import Kanji
-from jisho_api.sentence.request import Sentence
-from jisho_api.word.request import Word
-from jisho_api.tokenize.request import Tokens
 
 
 @click.group()
@@ -58,6 +55,7 @@ def _cache_enabled():
     return False
 
 
+
 def scraper(cls, words, root_dump, cache=True):
     words = {}
     with Progress(console=console, transient=True) as progress:
@@ -97,16 +95,19 @@ def _load_words(file_path):
 @click.argument("file_path")
 def scrape_words(file_path: str):
     """Scrape list of words in txtfile, separated by newline."""
+    from jisho_api.word.request import Word
     root_dump = Word.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 
     scraper(Word, _load_words(file_path), root_dump)
 
 
+
 @click.command(name="kanji")
 @click.argument("file_path")
 def scrape_kanji(file_path: str):
     """Scrape list of kanji in txtfile, separated by newline."""
+    from jisho_api.kanji.request import Kanji
     root_dump = Kanji.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 
@@ -117,6 +118,7 @@ def scrape_kanji(file_path: str):
 @click.argument("file_path")
 def scrape_sentence(file_path: str):
     """Scrape list of sentence in txtfile, separated by newline."""
+    from jisho_api.sentence.request import Sentence
     root_dump = Sentence.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 
@@ -126,6 +128,7 @@ def scrape_sentence(file_path: str):
 @click.argument("file_path")
 def scrape_tokens(file_path: str):
     """Scrape list of tokens in txtfile, separated by newline."""
+    from jisho_api.tokenize.request import Tokens
     root_dump = Tokens.ROOT
     root_dump.mkdir(parents=True, exist_ok=True)
 

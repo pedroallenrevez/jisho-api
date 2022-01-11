@@ -10,10 +10,9 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, ValidationError
 from rich.markdown import Markdown
 
-from jisho_api import console
+from jisho_api.cli import console
+from jisho_api.sentence.cfg import SentenceConfig
 from jisho_api.util import CLITagger
-
-from .cfg import SentenceConfig
 
 
 class RequestMeta(BaseModel):

@@ -9,10 +9,9 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel, ValidationError
 from rich.markdown import Markdown
 
-from jisho_api import console
+from jisho_api.cli import console
+from jisho_api.kanji.cfg import KanjiConfig
 from jisho_api.util import CLITagger
-
-from .cfg import KanjiConfig
 
 
 class RequestMeta(BaseModel):

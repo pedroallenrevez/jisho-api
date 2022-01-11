@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from pydantic import BaseModel, HttpUrl
 from rich.markdown import Markdown
 
-from jisho_api import console
+from jisho_api.cli import console
 from jisho_api.util import CLITagger
 
 

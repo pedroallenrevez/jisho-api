@@ -1,8 +1,9 @@
 def test_tokens_tatoeba():
-    from jisho_api.tokenize import Tokens
+    import random
 
     from tatoebatools import tatoeba
-    import random
+
+    from jisho_api.tokenize import Tokens
 
     # there's multiple thousands of sentences in tatoeba so we'll only use 100 in order not to fry jisho, which would be very rude indeed
     japanese_texts = [s.text for s in tatoeba.sentences_detailed("jpn")]
