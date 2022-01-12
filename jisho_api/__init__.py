@@ -1,6 +1,6 @@
-def scrape(cls, words, root_dump, cache=True):
+def scrape(cls, words, root_dump):
     from pathlib import Path
-    root_dump = Path(root_dump)
+    cls.ROOT = Path(root_dump)
     nwords = {}
     for i, w in enumerate(words):
         # 0 - name should be between quotes to search specifically for it
@@ -9,13 +9,8 @@ def scrape(cls, words, root_dump, cache=True):
         if strict:
             w = f'"{w}"'
 
-        # 1 - if file exists do not request
-        word_path = root_dump / f"{w}.json"
-        if word_path.exists():
-            continue
-
-        # 2 - make request
-        wr = cls.request(w, cache=cache)
+        # 1 - make request
+        wr = cls.request(w, cache=True)
         if wr is None:
             continue
         nwords[w] = wr

@@ -64,7 +64,7 @@ In case you want to scrape programatically you can:
 from jisho_api import scrape
 from jisho_api.word import Word
 
-word_requests = scrape(Word, ['water', 'fire'], '/to/path')
+word_requests = scrape(Word, ['water', 'fire'], 'to/path/')
 ```
 This will return a dictionary, which key values are the search term and request result.
 Failing requests are not included.

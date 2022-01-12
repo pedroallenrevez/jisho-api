@@ -28,5 +28,5 @@ def test_scrape():
     from jisho_api import scrape
     from jisho_api.word import Word
 
-    word_requests = scrape(Word, ['water', 'fire'], 'test', cache=False)
+    word_requests = scrape(Word, ['water', 'fire'], 'test')
     assert len(word_requests)
