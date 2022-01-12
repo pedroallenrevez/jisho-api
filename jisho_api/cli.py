@@ -142,6 +142,7 @@ def scrape_tokens(file_path: str):
 def request_word(word: str, cache: bool, no_cache: bool):
     """Uses jisho.org word search API.
     """
+    from jisho_api.word.request import Word
     flag = (cache or _cache_enabled()) and not no_cache
     w = Word.request(word, cache=flag)
     if w:
@@ -155,6 +156,7 @@ def request_word(word: str, cache: bool, no_cache: bool):
 def request_kanji(kanji: str, cache: bool, no_cache: bool):
     """Uses #kanji filter on jisho.org search engine.
     """
+    from jisho_api.kanji.request import Kanji
     flag = (cache or _cache_enabled()) and not no_cache
     k = Kanji.request(kanji, cache=flag)
     if k:
@@ -168,6 +170,7 @@ def request_kanji(kanji: str, cache: bool, no_cache: bool):
 def request_sentence(sentence: str, cache: bool, no_cache: bool):
     """Uses #sentences filter on jisho.org search engine.
     """
+    from jisho_api.sentence.request import Sentence
     flag = (cache or _cache_enabled()) and not no_cache
     k = Sentence.request(sentence, cache=flag)
     if k:
@@ -180,6 +183,7 @@ def request_sentence(sentence: str, cache: bool, no_cache: bool):
 def request_tokens(sentence: str, cache: bool, no_cache: bool):
     """jisho.org default search engine tokenizer.
     """
+    from jisho_api.tokenize.request import Tokens
     flag = (cache or _cache_enabled()) and not no_cache
     k = Tokens.request(sentence, cache=flag)
     if k:
