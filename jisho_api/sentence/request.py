@@ -48,18 +48,21 @@ class Sentence:
 
         sts = []
         for r in res:
-            s1_jp = r.find_all("li")
+            s1_jp = r.find("ul", {"class": "japanese_sentence"})
             s1_en = r.find_all("span", {"class": "english"})[0].text
 
             b = ""
-            for s in s1_jp:
-                u = s.find("span", {"class": "unlinked"}).text
-                b += u
-                try:
-                    f = s.find("span", {"class": "furigana"}).text
-                    b += f"({f})"
-                except:
-                    pass
+            for s in s1_jp.contents:
+                if s.find("span") != -1:
+                    try:
+                        u = s.find("span", {"class": "unlinked"}).text
+                        f = s.find("span", {"class": "furigana"}).text
+                        b += f"{u}({f})"
+                    except:
+                        pass
+                else:
+                    u = s.text
+                    b += u
             sts.append({"japanese": b, "en_translation": s1_en})
 
         return sts
