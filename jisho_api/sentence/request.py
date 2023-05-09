@@ -54,11 +54,12 @@ class Sentence:
             b = ""
             for s in s1_jp.contents:
                 if s.find("span") != -1:
+                    u = s.find("span", {"class": "unlinked"}).text
                     try:
-                        u = s.find("span", {"class": "unlinked"}).text
                         f = s.find("span", {"class": "furigana"}).text
                         b += f"{u}({f})"
                     except:
+                        b += f"{u}"
                         pass
                 else:
                     u = s.text
