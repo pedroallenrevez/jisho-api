@@ -63,6 +63,7 @@ class Sentence:
                 else:
                     u = s.text
                     b += u
+            b = b.strip()
             sts.append({"japanese": b, "en_translation": s1_en})
 
         return sts
