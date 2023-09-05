@@ -8,6 +8,7 @@ from rich.console import Console
 console = Console()
 from rich.progress import Progress, track
 from rich.prompt import Prompt
+from typing import List
 
 
 @click.group()
@@ -56,11 +57,10 @@ def _cache_enabled():
 
 
 
-def scraper(cls, words, root_dump, cache=True):
-    words = {}
+def scraper(cls, words: List[str], root_dump: Path, cache: bool = True):
     with Progress(console=console, transient=True) as progress:
         task1 = progress.add_task("[green]Scraping...", total=len(words))
-        for i, w in enumerate(words):
+        for w in words:
             # 0 - name should be between quotes to search specifically for it
             # with a * it is a wildcard, to see applications of this word at the end
             strict = "*" not in w
@@ -78,11 +78,8 @@ def scraper(cls, words, root_dump, cache=True):
             if wr is None:
                 progress.advance(task1)
                 continue
-            words[w] = wr
 
             progress.advance(task1)
-    return words
-
 
 def _load_words(file_path):
     with open(file_path, "r") as fp:
