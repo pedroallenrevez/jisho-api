@@ -1,13 +1,11 @@
 import json
-import pprint
 import re
 import urllib
 from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, ValidationError
-from rich.markdown import Markdown
+from pydantic import BaseModel
 
 from jisho_api.cli import console
 from jisho_api.kanji.cfg import KanjiConfig
@@ -317,7 +315,7 @@ class Kanji:
         }
 
     @staticmethod
-    def request(kanji, cache=False):
+    def request(kanji, cache=False, headers=None):
         url = Kanji.URL + urllib.parse.quote(kanji + " #kanji")
         toggle = False
 
@@ -327,7 +325,7 @@ class Kanji:
                 r = json.load(fp)
             r = KanjiRequest(**r)
         else:
-            r = requests.get(url).content
+            r = requests.get(url, headers=headers).content
 
             soup = BeautifulSoup(r, "html.parser")
 
