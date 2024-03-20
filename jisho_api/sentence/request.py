@@ -1,13 +1,11 @@
 import json
-import pprint
-import re
 import urllib
 from pathlib import Path
 from typing import List
 
 import requests
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 from rich.markdown import Markdown
 
 from jisho_api.cli import console
@@ -70,7 +68,7 @@ class Sentence:
         return sts
 
     @staticmethod
-    def request(word, cache=False):
+    def request(word, cache=False, headers=None):
         url = Sentence.URL + urllib.parse.quote(word + " #sentences")
         toggle = False
 
@@ -80,7 +78,7 @@ class Sentence:
                 r = json.load(fp)
             r = SentenceRequest(**r)
         else:
-            r = requests.get(url).content
+            r = requests.get(url, headers=headers).content
             soup = BeautifulSoup(r, "html.parser")
 
             r = SentenceRequest(

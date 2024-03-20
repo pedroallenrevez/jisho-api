@@ -21,9 +21,9 @@ class PosTag(Enum):
     # rather than causing the program to crash, inform the user of the unexpected posTag
     # implementation source: https://stackoverflow.com/questions/44867597/is-there-a-way-to-specify-a-default-value-for-python-enums
     @classmethod
-    def _missing_(self, value):
+    def _missing_(cls, value):
         print("Unexpected positional Tag: {}".format(value))
-        return self.unk
+        return cls.unk
 
 class TokenConfig(BaseModel):
     token: str

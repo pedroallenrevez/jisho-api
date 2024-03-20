@@ -6,8 +6,7 @@ import click
 from rich.console import Console
 
 console = Console()
-from rich.progress import Progress, track
-from rich.prompt import Prompt
+from rich.progress import Progress
 from typing import List
 
 
