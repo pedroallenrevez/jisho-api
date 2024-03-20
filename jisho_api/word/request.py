@@ -1,11 +1,10 @@
 import json
-import pprint
 import urllib
 from pathlib import Path
 from typing import List
 
 import requests
-from pydantic import BaseModel, ValidationError, validator
+from pydantic import BaseModel
 from rich.markdown import Markdown
 
 from jisho_api.cli import console
@@ -62,7 +61,7 @@ class Word:
     ROOT = Path.home() / ".jisho/data/word"
 
     @staticmethod
-    def request(word, cache=False):
+    def request(word, cache=False, headers=None):
         url = Word.URL + urllib.parse.quote(word)
         toggle = False
 
@@ -71,7 +70,7 @@ class Word:
             with open(Word.ROOT / (word + ".json"), "r") as fp:
                 r = json.load(fp)
         else:
-            r = requests.get(url).json()
+            r = requests.get(url, headers=headers).json()
         r = WordRequest(**r)
         if not len(r):
             console.print(f"[red bold][Error] [white] No matches found for {word}.")

@@ -1,19 +1,16 @@
 import json
-import pprint
-import re
 import urllib
 from pathlib import Path
 from typing import List
 
 import requests
+from pydantic import BaseModel
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, ValidationError
-from rich.markdown import Markdown
 
 from jisho_api.cli import console
+from jisho_api.tokenize.cfg import TokenConfig
 from jisho_api.util import CLITagger
 
-from .cfg import TokenConfig
 
 
 class RequestMeta(BaseModel):
@@ -69,7 +66,7 @@ class Tokens:
         return tks
 
     @staticmethod
-    def request(word, cache=False):
+    def request(word, cache=False, headers=None):
         url = Tokens.URL + urllib.parse.quote(word)
         toggle = False
 
@@ -79,7 +76,7 @@ class Tokens:
                 r = json.load(fp)
             r = TokenRequest(**r)
         else:
-            r = requests.get(url).content
+            r = requests.get(url, headers=headers).content
             soup = BeautifulSoup(r, "html.parser")
 
             r = TokenRequest(
