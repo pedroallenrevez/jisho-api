@@ -1,11 +1,7 @@
 from enum import Enum
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, HttpUrl
-from rich.markdown import Markdown
-
-from jisho_api.cli import console
-from jisho_api.util import CLITagger
+from pydantic import BaseModel
 
 
 class JLPT(str, Enum):
