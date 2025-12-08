@@ -30,7 +30,7 @@ class Japanese(BaseModel):
     reading: Optional[str]
 
     @property
-    def name():
+    def name(self):
         if self.word:
             return self.word
         return self.reading
