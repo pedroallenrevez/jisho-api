@@ -70,7 +70,7 @@ class Word:
             with open(Word.ROOT / (word + ".json"), "r", encoding="utf-8") as fp:
                 r = json.load(fp)
         else:
-            r = requests.get(url, headers=headers).json()
+            r = requests.get(url, headers=headers, timeout=30).json()
         r = WordRequest(**r)
         if not len(r):
             console.print(f"[red bold][Error] [white] No matches found for {word}.")
