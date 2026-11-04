@@ -76,7 +76,7 @@ class Tokens:
                 r = json.load(fp)
             r = TokenRequest(**r)
         else:
-            r = requests.get(url, headers=headers).content
+            r = requests.get(url, headers=headers, timeout=30).content
             soup = BeautifulSoup(r, "html.parser")
 
             r = TokenRequest(

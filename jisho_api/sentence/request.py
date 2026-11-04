@@ -78,7 +78,7 @@ class Sentence:
                 r = json.load(fp)
             r = SentenceRequest(**r)
         else:
-            r = requests.get(url, headers=headers).content
+            r = requests.get(url, headers=headers, timeout=30).content
             soup = BeautifulSoup(r, "html.parser")
 
             r = SentenceRequest(
